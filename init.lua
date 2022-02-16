@@ -53,7 +53,33 @@ Config.CircleZones = {
 }
 
 Config.BoxZones = {
-
+	["LSCLobby"] = {
+        name = "LSCLobby",
+        coords = vector3(-348.25, -127.12, 38.99),
+        length = 0.75,
+        width = 0.4,
+        heading = -20,
+        debugPoly = true,
+        minZ = 39.01,
+        maxZ = 39.75,
+        options = {
+            {
+                type = "server",
+                event = "QBCore:ToggleDuty",
+                icon = "fas fa-clipboard",
+                label = "Toggle Duty",
+                job = "mechanic",
+            },
+			{
+				type = "server",
+				event = 'qb-mechanicjob:client:bill',
+				icon = 'fas fa-money-check-dollar-pen',
+				label = "Charge Customer",
+				job = "mechanic"
+			}
+        },
+        distance = 1.5
+    },
 }
 
 Config.PolyZones = {
@@ -85,11 +111,40 @@ Config.GlobalObjectOptions = {
 }
 
 Config.GlobalPlayerOptions = {
-
+	options = {
+		{
+			type = 'client',
+			event = 'qb-phone:client:GiveContactDetails',
+			icon = 'fas fa-chevron-circle-left',
+			label = 'Give contact details',
+		},
+	}
 }
 
 Config.Peds = {
-
+	[1] = {
+  model = 'a_f_y_hipster_01',
+  coords = vector4(-266.23, -967.81, 31.23, 300.11),
+  minusOne = true,
+  freeze = true,
+  invincible = true,
+  blockevents = true,
+  animDict = 'abigail_mcs_1_concat-0',
+  anim = 'csb_abigail_dual-0',
+  flag = 1,
+  scenario = 'WORLD_HUMAN_AA_COFFEE',
+  target = {
+    options = {
+      {
+        type = "client",
+        event = "qb-multicharacter:client:chooseChar",
+        icon = 'fas fa-arrow-right-arrow-left',
+        label = 'Swap Character',
+      }
+    },
+    distance = 2.5
+  },
+},
 }
 
 -------------------------------------------------------------------------------
