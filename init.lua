@@ -53,7 +53,7 @@ Config.CircleZones = {
 }
 
 Config.BoxZones = {
-	["LSCLobby"] = {
+	["LSC"] = {
         name = "LSCLobby",
         coords = vector3(-348.25, -127.12, 38.99),
         length = 0.75,
@@ -71,15 +71,33 @@ Config.BoxZones = {
                 job = "mechanic",
             },
 			{
-				type = "server",
+				type = "client",
 				event = 'qb-mechanicjob:client:bill',
-				icon = 'fas fa-money-check-dollar-pen',
+				icon = 'fas fa-cash-register',
 				label = "Charge Customer",
 				job = "mechanic"
 			}
         },
         distance = 1.5
     },
+	['LSCStash'] = {
+		name = 'LSCStash',
+		coords = vector3(-313.73, -129.86, 39.01),
+		length = 2.0,
+		width = 0.95,
+		heading = 161,
+		debugPoly = true,
+		minZ = 36.01,
+		maxZ = 39.89,
+		options = {
+			type = "client",
+			event = 'mechanic:client:openStash',
+			icon = 'fas fa-box',
+			label = 'Personal Locker',
+			job = 'mechanic'
+		},
+		distance = 1.5
+	},
 }
 
 Config.PolyZones = {
