@@ -53,13 +53,200 @@ Config.CircleZones = {
 }
 
 Config.BoxZones = {
-	["LSC"] = {
-        name = "LSCLobby",
+	["MRPDBossMenu"] = {
+        name = "MRPDBossMenu",
+        coords = vector3(461.58, -985.55, 31.37),
+        length = 0.65,
+        width = 0.65,
+        heading = 122.95,
+        debugPoly = false,
+        minZ = 30.03,
+        maxZ = 31.14,
+        options = {
+            {
+                type = "client",
+                event = "qb-bossmenu:client:openMenu",
+                icon = "fas fa-folder",
+                label = "Open Boss Menu",
+                job = "police",
+            },
+        },
+        distance = 2.0
+    },
+	["MRPDPoliceDuty"] = {
+        name = "MRPDPoliceDuty",
+        coords = vector3(441.83, -982.06, 30.69),
+        length = 0.5,
+        width = 0.4,
+        heading = 12,
+        debugPoly = false,
+        minZ = 30.79,
+        maxZ = 31.04,
+        options = {
+            {
+                type = "client",
+                event = "policejob:client:dutyToggle",
+                icon = "fas fa-clipboard",
+                label = "Toggle Duty",
+                job = "police",
+            },
+        },
+        distance = 1.5
+    },
+	["MRPDPoliceDuty2"] = {
+        name = "MRPDPoliceDuty2",
+        coords = vector3(473.16, -1006.95, 26.28),
+        length = 0.45,
+        width = 0.35,
+        heading = 88.68,
+        debugPoly = false,
+        minZ = 26.23034,
+        maxZ = 26.33034,
+        options = {
+            {
+                type = "client",
+                event = "policejob:client:dutyToggle",
+                icon = "fas fa-clipboard",
+                label = "Toggle Duty",
+                job = "police",
+            },
+        },
+        distance = 2.5
+    },
+	["MRPDPoliceDutyDog"] = {
+        name = "MRPDPoliceDutyDog",
+        coords = vector3(460.78, -980.83, 31.27),
+        length = 1.0,
+        width = 1.0,
+        heading = 12,
+        debugPoly = false,
+        minZ = 30.07,
+        maxZ = 30.57,
+        options = {
+            {
+                type = "client",
+                event = "policejob:client:dutyToggle",
+                icon = "fas fa-clipboard",
+                label = "Woof Woof, donuts, YABADOABAODOOO, bork",
+                job = "police",
+            },
+        },
+        distance = 1.5
+    },
+	["MRPDClothes"] = {
+        name = "MRPDClothes",
+        coords = vector3(461.93, -1000.2, 30.69),
+        length = 0.4,
+        width = 4.34,
+        heading = 0,
+        debugPoly = false,
+        minZ = 29.72,
+        maxZ = 32.48,
+        options = {
+            {
+                type = "client",
+                event = "fivem-appearance:PDclothingShop",
+                icon = "fas fa-tshirt",
+                label = "View Clothing",
+                job = "police",
+            },
+        },
+        distance = 2.5
+    },
+	["MRPDArmory"] = {
+        name = "MRPDArmory",
+        coords = vector3(485.41, -995.34, 30.69),
+        length = 1.5,
+        width = 1.5,
+        heading = 235,
+        debugPoly = false,
+        minZ = 24.33,
+        maxZ = 35.33,
+        options = {
+            {
+                type = "client",
+                event = "police:client:openArmory",
+                icon = "fas fa-clipboard",
+                label = "Open Police Armory",
+                job = "police"
+            }
+        },
+        distance = 1.5
+    },
+	["MRPDPersonalStash1"] = {
+        name = "MRPDPersonalStash1",
+        coords = vector3(482.6, -995.07, 30.69),
+        length = 0.8,
+        width = 1,
+        heading = 180.93992614746,
+        debugPoly = false,
+        minZ = 30.0,
+        maxZ = 31.5,
+        options = {
+            {
+                type = "client",
+                event = "police:client:openStash",
+                icon = "fas fa-boxes",
+                label = "Personal Stash",
+                job = "police",
+            },
+        },
+        distance = 2.5
+    },
+    ["MRPDFingerprintScan"] = {
+        name = "MRPDFingerprintScan",
+        coords = vector3(474.16, -1014.02, 27.21),
+        length = 0.5,
+        width = 0.3,
+        heading = 88.68,
+        debugPoly = false,
+        minZ = 26.2,
+        maxZ = 26.69,
+        options = {
+            {
+                type = "client",
+                event = "police:client:openFingerprint",
+                icon = "fas fa-fingerprint",
+                label = "Scan Fingerprint",
+                job = "police",
+            },
+        },
+        distance = 2.5
+    },
+	["lsclobbycomputer1"] = {
+        name = "lsclobbycomputer1",
         coords = vector3(-348.25, -127.12, 38.99),
         length = 0.75,
         width = 0.4,
         heading = -20,
-        debugPoly = true,
+        debugPoly = false,
+        minZ = 39.01,
+        maxZ = 39.75,
+        options = {
+            {
+                type = "server",
+                event = "QBCore:ToggleDuty",
+                icon = "fas fa-clipboard",
+                label = "Toggle Duty",
+                job = "mechanic",
+            },
+			{
+				type = "client",
+				event = 'qb-mechanicjob:client:bill',
+				icon = 'fas fa-cash-register',
+				label = "Charge Customer",
+				job = "mechanic"
+			}
+        },
+        distance = 1.5
+    },
+	["lsclobbycomputer2"] = {
+        name = "lsclobbycomputer2",
+        coords = vector3(-349.11, -129.29, 39.01),
+        length = 0.75,
+        width = 0.4,
+        heading = -20,
+        debugPoly = false,
         minZ = 39.01,
         maxZ = 39.75,
         options = {
@@ -86,18 +273,59 @@ Config.BoxZones = {
 		length = 2.0,
 		width = 0.95,
 		heading = 161,
-		debugPoly = true,
+		debugPoly = false,
 		minZ = 36.01,
 		maxZ = 39.89,
 		options = {
-			type = "client",
-			event = 'mechanic:client:openStash',
-			icon = 'fas fa-box',
-			label = 'Personal Locker',
-			job = 'mechanic'
+			{
+				type = "client",
+				event = 'mechanic:client:openStash',
+				icon = 'fas fa-box',
+				label = 'Personal Locker',
+				job = 'mechanic'
+			}
 		},
 		distance = 1.5
 	},
+	['LSCOutfit'] = {
+		name = 'LSCOutfit',
+		coords = vector3(-309.51, -137.81, 39.01),
+		length = 3.0,
+		width = 1.90,
+		heading = 338,
+		debugPoly = false,
+		minZ = 36.01,
+		maxZ = 39.89,
+		options = {
+			{
+				type = "client",
+				event = 'qb-clothing:client:openOutfitMenu',
+				icon = 'fas fa-shirt',
+				label = 'Change Wardrobe',
+				job = 'mechanic'
+			}
+		},
+		distance = 1.5
+	},
+	['mechanicbossmenu'] = {
+		name = 'mechanicbossmenu',
+		coords = vector3(-305.03, -122.15, 39.01),
+		length = 0.45,
+		width = 0.59,
+		heading = 25,
+		debugPoly = false,
+		minZ = 38.81,
+		maxZ = 39.35,
+		options = {
+			{
+				type = 'client',
+				event = 'qb-bossmenu:client:openMenu',
+				icon = 'fas fa-desktop',
+				label = 'Access Boss Menu',
+				job = 'mechanic'
+			}
+		}
+	}
 }
 
 Config.PolyZones = {
@@ -113,7 +341,115 @@ Config.TargetEntities = {
 }
 
 Config.TargetModels = {
-
+	["drinkVending"] = {
+        models =     {
+            "prop_vend_soda_01",
+            "prop_vend_soda_02",
+            "prop_vend_water_01",
+        },
+        options = {
+            {
+                type = "client",
+                event = 'vendingDrink:buy',
+                icon = "fas fa-shopping-basket",
+                label = "Insert Coin",
+            },
+        },
+        distance = 2.5
+    },
+    ["vendingSnack"] = {
+        models =     {
+            "prop_vend_snak_01",
+            "prop_vend_snak_01_tu",
+        },
+        options = {
+            {
+                type = "client",
+                event = 'vendingSnack:buy',
+                icon = "fas fa-shopping-basket",
+                label = "Insert Coin",
+            },
+        },
+        distance = 2.5
+    },
+    
+    ["vendingCoffee"] = {
+        models =     {
+            "prop_vend_coffe_01",
+            "apa_mp_h_acc_coffeemachine_01",
+        },
+        options = {
+            {
+                type = "client",
+                event = 'vendingCoffee:buy',
+                icon = "fas fa-shopping-basket",
+                label = "Insert Coin",
+            },
+        },
+        distance = 2.5
+    },
+	['watercooler'] = {
+		models = {
+			'prop_watercooler_dark',
+			'prop_watercooler'
+		},
+		options = {
+			{
+				type = "server",
+				event = 'targetevent:server:watercooler',
+				icon = 'fas fa-water',
+				label = "Grab a Water"
+			}
+		},
+		distance = 2.5
+	},
+    ["ATM"] = {
+        models = {
+            "prop_atm_01", 
+            "prop_atm_02", 
+            "prop_atm_03", 
+            "prop_fleeca_atm"},
+        options = {
+                            {
+                type = "command",
+                event = "atm",
+                parameters = {},
+                icon = "fab fa-cc-visa",
+                label = "Use ATM"
+            },
+        },
+        distance = 1.0
+    },
+    ["qb-slots"] = {
+		models = {
+			'ch_prop_casino_slot_01a',
+			'ch_prop_casino_slot_02a',
+			'ch_prop_casino_slot_03a',
+			'ch_prop_casino_slot_04a',
+			'ch_prop_casino_slot_04b',
+			'ch_prop_casino_slot_05a',
+			'ch_prop_casino_slot_06a',
+			'ch_prop_casino_slot_07a',
+			'ch_prop_casino_slot_08a',
+			'vw_prop_casino_slot_01a',
+			'vw_prop_casino_slot_02a',
+			'vw_prop_casino_slot_03a',
+			'vw_prop_casino_slot_04a',
+			'vw_prop_casino_slot_05a',
+			'vw_prop_casino_slot_06a',
+			'vw_prop_casino_slot_07a',
+			'vw_prop_casino_slot_08a',
+		},
+		options = {
+			{
+				type = "client",
+				event = "qb-slots:enterBets",
+				icon = "fa-solid fa-slot-machine",
+				label = "Play Slot Machine",
+			},
+		},
+		distance = 2.5,
+	},
 }
 
 Config.GlobalPedOptions = {
@@ -121,7 +457,58 @@ Config.GlobalPedOptions = {
 }
 
 Config.GlobalVehicleOptions = {
-
+	options = {
+		{
+			type = 'client',
+			event = 'police:client:SetPlayerOutVehicle',
+			icon = 'fas fa-chevron-circle-right',
+			label = 'Remove From Vehicle',
+		},
+		{
+			type = 'client',
+			event = 'police:client:ImpoundVehicle',
+			icon = 'fas fa-car',
+			label = 'Impound Vehicle',
+			job = 'police'
+		},
+        {
+			type = 'client',
+			event = 'qb-clothing:client:openOutfitMenu',
+			icon = 'fas fa-car',
+			label = 'Open clothing compartment',
+			job = 'police'
+		},
+        {
+			type = 'client',
+			event = 'police:client:openStash',
+			icon = 'fas fa-car',
+			label = 'Open Safe',
+			job = 'police'
+		},
+        {
+			type = 'client',
+			event = 'qb-tow:client:TowVehicle',
+			icon = 'fas fa-car',
+			label = 'Tow vehicle',
+			job = 'mechanic12'
+		},
+		{
+			type = 'client',
+			event = 'qb-trunk:client:GetIn',
+			icon = 'fas fa-user-secret',
+			label = 'Get In Trunk',
+		},
+		-- {
+		--     type = 'client',
+		--     event = 'vehicle:flipit',
+		--     icon = 'fas fa-car',
+		--     label = 'Flip Vehicle',
+		--     canInteract = function()
+		--         vehicle = NodusCore.Functions.GetClosestVehicle()
+		--         return not IsVehicleOnAllWheels(vehicle)
+		--     end,
+		-- },
+	}
 }
 
 Config.GlobalObjectOptions = {
