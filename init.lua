@@ -30,7 +30,7 @@ Config.Standalone = false
 Config.EnableOutline = false
 
 -- Enable default options (Toggling vehicle doors)
-Config.EnableDefaultOptions = true
+Config.EnableDefaultOptions = false
 
 -- Disable the target eye whilst being in a vehicle
 Config.DisableInVehicle = false
@@ -450,6 +450,35 @@ Config.TargetModels = {
 		},
 		distance = 2.5,
 	},
+    ["boats"] = {
+        models = {
+            'tritoon',
+        },
+        options = {
+            {
+                type = "client",
+                event = "request:CuffPed",
+                icon = "fas fa-hands",
+                label = "Cuff / Uncuff",
+            },
+        },
+        distance = 2.5,
+    },
+    ['hunting'] = {
+        models = {
+            'a_c_deer',
+            'a_c_coyote',
+            'a_c_boar'
+        },
+        options = {
+            {
+                type = 'client',
+                event = 'qb-hunting:client:butcheranimal',
+                icon = 'fas fa-gun',
+                label = 'Butcher Animal'
+            }
+        }
+    }
 }
 
 Config.GlobalPedOptions = {
@@ -458,12 +487,12 @@ Config.GlobalPedOptions = {
 
 Config.GlobalVehicleOptions = {
 	options = {
-		{
+		--[[{
 			type = 'client',
 			event = 'police:client:SetPlayerOutVehicle',
 			icon = 'fas fa-chevron-circle-right',
 			label = 'Remove From Vehicle',
-		},
+		},]]
 		{
 			type = 'client',
 			event = 'police:client:ImpoundVehicle',
@@ -492,12 +521,12 @@ Config.GlobalVehicleOptions = {
 			label = 'Tow vehicle',
 			job = 'mechanic12'
 		},
-		{
+		--[[{
 			type = 'client',
 			event = 'qb-trunk:client:GetIn',
 			icon = 'fas fa-user-secret',
 			label = 'Get In Trunk',
-		},
+		},]]
 		-- {
 		--     type = 'client',
 		--     event = 'vehicle:flipit',
@@ -528,28 +557,76 @@ Config.GlobalPlayerOptions = {
 
 Config.Peds = {
 	[1] = {
-  model = 'a_f_y_hipster_01',
-  coords = vector4(-266.23, -967.81, 31.23, 300.11),
-  minusOne = true,
-  freeze = true,
-  invincible = true,
-  blockevents = true,
-  animDict = 'abigail_mcs_1_concat-0',
-  anim = 'csb_abigail_dual-0',
-  flag = 1,
-  scenario = 'WORLD_HUMAN_AA_COFFEE',
-  target = {
-    options = {
-      {
-        type = "client",
-        event = "qb-multicharacter:client:chooseChar",
-        icon = 'fas fa-arrow-right-arrow-left',
-        label = 'Swap Character',
-      }
+        model = 'a_f_y_hipster_01',
+        coords = vector4(-266.23, -967.81, 31.23, 300.11),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        blockevents = true,
+        animDict = 'abigail_mcs_1_concat-0',
+        anim = 'csb_abigail_dual-0',
+        flag = 1,
+        scenario = 'WORLD_HUMAN_AA_COFFEE',
+        target = {
+            options = {
+            {
+                type = "client",
+                event = "qb-multicharacter:client:chooseChar",
+                icon = 'fas fa-arrow-right-arrow-left',
+                label = 'Swap Character',
+            }
+            },
+            distance = 2.5
+        },
     },
-    distance = 2.5
-  },
-},
+    [2] = {
+        model = 's_m_y_garbage',
+        coords = vector4(-322.25, -1545.84, 31.02, 273.78),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = "client",
+                    event = "getGarbagePaySlip",
+                    icon = "far fa-money-bill-wave",
+                    label = "Collect Paycheck"
+                },
+                {
+                    type = "client",
+                    event = "GarbageTruckSpawn",
+                    icon = "far fa-truck-moving",
+                    label = "Spawn Garbage-Truck"
+                },
+            },
+            distance = 2.5
+        },
+    },
+    [3] = {
+        model = 'a_m_m_farmer_01',
+        coords = vector4(2029.65, 4980.63, 42.1, 226.36),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = "client",
+                    event = "hunting:buy",
+                    icon = "far fa-money-bill-wave",
+                    label = "Open Shop"
+                },
+                {
+                    type = "client",
+                    event = "",
+                    icon = "far fa-truck-moving",
+                    label = "Sell products"
+                },
+            },
+            distance = 2.5
+        },
+    }, 
 }
 
 -------------------------------------------------------------------------------
