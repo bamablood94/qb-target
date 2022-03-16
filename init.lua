@@ -457,9 +457,9 @@ Config.TargetModels = {
         options = {
             {
                 type = "client",
-                event = "request:CuffPed",
-                icon = "fas fa-hands",
-                label = "Cuff / Uncuff",
+                event = "qb-vehiclemenu:client:openextras",
+                icon = "fas fa-anchor",
+                label = "Toggle Extras",
             },
         },
         distance = 2.5,
@@ -533,7 +533,7 @@ Config.GlobalVehicleOptions = {
 		--     icon = 'fas fa-car',
 		--     label = 'Flip Vehicle',
 		--     canInteract = function()
-		--         vehicle = NodusCore.Functions.GetClosestVehicle()
+		--         vehicle = QBCore.Functions.GetClosestVehicle()
 		--         return not IsVehicleOnAllWheels(vehicle)
 		--     end,
 		-- },
