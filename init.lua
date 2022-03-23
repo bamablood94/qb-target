@@ -744,6 +744,23 @@ Config.Peds = {
             distance = 2.5
         },
     },
+    [5] = {
+        model = '',
+        coords = vector4(-550.16, -190.01, 38.22, 182.22),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'qb-cityhall:client:openui',
+                    icon = 'fas fa-id-badge',
+                    label = 'Job and License Center',
+                },
+            }
+        }
+    }
          
 }
 
