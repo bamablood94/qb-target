@@ -59,7 +59,7 @@ Config.BoxZones = {
         length = 0.65,
         width = 0.65,
         heading = 122.95,
-        debugPoly = false,
+        debugPoly = true,
         minZ = 30.03,
         maxZ = 31.14,
         options = {
@@ -325,7 +325,106 @@ Config.BoxZones = {
 				job = 'mechanic'
 			}
 		}
-	}
+	},
+    ["boxzone9"] = {
+        name = "snows_gunshow_register",
+        coords = vector3(23.75, -1106.43, 29.8),
+        length = 0.45,
+        width = 0.5,
+        heading = 341,
+        debugPoly = true,
+        minZ=29.8,
+        maxZ=30.2,
+        options = {
+            {
+              type = "client",
+              event = "shopgun:menu",
+              icon = "fas fa-cash-register",
+              label = "Gun Register",
+              job = "snowsgunshow"
+            },
+        },
+        distance = 2.5
+    },
+    ["boxzone10"] = {
+        name = "snows_gunshow_shoptable",
+        coords = vector3(22.35, -1106.15, 29.8),
+        length = 0.8,
+        width = 2,
+        heading = 340,
+        debugPoly = true,
+        minZ=25.8,
+        maxZ=29.8,
+        options = {
+            {
+              type = "client",
+              event = "shopgun:OpenInventory",
+              icon = "fas fa-box-open",
+              label = "shop table",
+            },
+        },
+        distance = 2.5
+    },
+    ["boxzone11"] = {
+        name = "snows_gunshow_stash",
+        coords = vector3(23.18, -1109.38, 29.8),
+        length = 0.8,
+        width = 1,
+        heading = 295,
+        debugPoly = true,
+        minZ=28.8,
+        maxZ=29.8,
+        options = {
+            {
+              type = "client",
+              event = "shopgun:stash",
+              icon = "fas fa-box",
+              label = "shop stash",
+              job = "snowsgunshow"
+            },
+        },
+        distance = 2.5
+    },
+    ["boxzone12"] = {
+        name = "SnowsGunShowBossmenu",
+        coords = vector3(12.19, -1106.16, 29.8),
+        length = 0.4,
+        width = 2,
+        heading = 340,
+        debugPoly = true,
+        minZ = 28.85,
+        maxZ = 31.05,
+        options = {
+            {
+                type = "client",
+                event = "qb-bossmenu:client:openMenu",
+                icon = "fas fa-folder",
+                label = "Open Boss Menu",
+                job = "snowsgunshow",
+            },
+        },
+        distance = 2.0
+    },
+    --[[["boxzone12"] = {
+        name = "snows_gunshow_gunbin",
+        coords = vector3(20.53, -1105.32, 29.8),
+        length = 1.15,
+        width = 2,
+        heading = 340,
+        debugPoly = true,
+        minZ=25.8,
+        maxZ=29.8,
+        options = {
+            {
+              type = "client",
+              event = "Shopgun:Trash",
+              icon = "fas fa-trash",
+              label = "gun bin",
+              job = "gunshop"
+            },
+        },
+        distance = 2.5
+    },]]
 }
 
 Config.PolyZones = {
@@ -549,7 +648,7 @@ Config.GlobalPlayerOptions = {
 		{
 			type = 'client',
 			event = 'qb-phone:client:GiveContactDetails',
-			icon = 'fas fa-chevron-circle-left',
+			icon = 'fas fa-address-book',
 			label = 'Give contact details',
 		},
 	}
@@ -590,13 +689,13 @@ Config.Peds = {
                 {
                     type = "client",
                     event = "getGarbagePaySlip",
-                    icon = "far fa-money-bill-wave",
+                    icon = "fas fa-money-bill-wave",
                     label = "Collect Paycheck"
                 },
                 {
                     type = "client",
                     event = "GarbageTruckSpawn",
-                    icon = "far fa-truck-moving",
+                    icon = "fas fa-truck-fast",
                     label = "Spawn Garbage-Truck"
                 },
             },
@@ -614,19 +713,38 @@ Config.Peds = {
                 {
                     type = "client",
                     event = "hunting:buy",
-                    icon = "far fa-money-bill-wave",
+                    icon = "fas fa-money-bill-wave",
                     label = "Open Shop"
                 },
                 {
                     type = "client",
                     event = "",
-                    icon = "far fa-truck-moving",
+                    icon = "fas fa-truck-fast",
                     label = "Sell products"
                 },
             },
             distance = 2.5
         },
-    }, 
+    },
+    [4] = {
+        model = 's_m_m_paramedic_01',
+        coords = vector4(1829.9, 3692.77, 34.22, 26.94),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'qb-clothes:client:CreateFirstCharacter',
+                    icon = 'fas fa-user-tie',
+                    label = 'Plastic Surgery'
+                },
+            },
+            distance = 2.5
+        },
+    },
+         
 }
 
 -------------------------------------------------------------------------------
