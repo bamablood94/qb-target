@@ -629,7 +629,7 @@ Config.Peds = {
     },
     [4] = {
         model = 's_m_m_paramedic_01',
-        coords = vector4(1829.9, 3692.77, 34.22, 26.94),
+        coords = vector4(242.39, -1377.46, 39.53, 313.54),
         minusOne = true,
         freeze = true,
         invincible = true,
