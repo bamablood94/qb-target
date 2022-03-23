@@ -549,7 +549,7 @@ Config.GlobalPlayerOptions = {
 		{
 			type = 'client',
 			event = 'qb-phone:client:GiveContactDetails',
-			icon = 'fas fa-chevron-circle-left',
+			icon = 'fas fa-address-book',
 			label = 'Give contact details',
 		},
 	}
@@ -590,13 +590,13 @@ Config.Peds = {
                 {
                     type = "client",
                     event = "getGarbagePaySlip",
-                    icon = "far fa-money-bill-wave",
+                    icon = "fas fa-money-bill-wave",
                     label = "Collect Paycheck"
                 },
                 {
                     type = "client",
                     event = "GarbageTruckSpawn",
-                    icon = "far fa-truck-moving",
+                    icon = "fas fa-truck-fast",
                     label = "Spawn Garbage-Truck"
                 },
             },
@@ -614,19 +614,38 @@ Config.Peds = {
                 {
                     type = "client",
                     event = "hunting:buy",
-                    icon = "far fa-money-bill-wave",
+                    icon = "fas fa-money-bill-wave",
                     label = "Open Shop"
                 },
                 {
                     type = "client",
                     event = "",
-                    icon = "far fa-truck-moving",
+                    icon = "fas fa-truck-fast",
                     label = "Sell products"
                 },
             },
             distance = 2.5
         },
-    }, 
+    },
+    [4] = {
+        model = 's_m_m_paramedic_01',
+        coords = vector4(1829.9, 3692.77, 34.22, 26.94),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'qb-clothes:client:CreateFirstCharacter',
+                    icon = 'fas fa-user-tie',
+                    label = 'Plastic Surgery'
+                },
+            },
+            distance = 2.5
+        },
+    },
+         
 }
 
 -------------------------------------------------------------------------------
