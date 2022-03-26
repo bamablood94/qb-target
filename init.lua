@@ -59,7 +59,7 @@ Config.BoxZones = {
         length = 0.65,
         width = 0.65,
         heading = 122.95,
-        debugPoly = true,
+        debugPoly = false,
         minZ = 30.03,
         maxZ = 31.14,
         options = {
@@ -199,7 +199,7 @@ Config.BoxZones = {
         length = 0.5,
         width = 0.3,
         heading = 88.68,
-        debugPoly = false,
+        debugPoly = true,
         minZ = 26.2,
         maxZ = 26.69,
         options = {
@@ -332,7 +332,7 @@ Config.BoxZones = {
         length = 0.45,
         width = 0.5,
         heading = 341,
-        debugPoly = true,
+        debugPoly = false,
         minZ=29.8,
         maxZ=30.2,
         options = {
@@ -352,7 +352,7 @@ Config.BoxZones = {
         length = 0.8,
         width = 2,
         heading = 340,
-        debugPoly = true,
+        debugPoly = false,
         minZ=25.8,
         maxZ=29.8,
         options = {
@@ -371,7 +371,7 @@ Config.BoxZones = {
         length = 0.8,
         width = 1,
         heading = 295,
-        debugPoly = true,
+        debugPoly = false,
         minZ=28.8,
         maxZ=29.8,
         options = {
@@ -391,7 +391,7 @@ Config.BoxZones = {
         length = 0.4,
         width = 2,
         heading = 340,
-        debugPoly = true,
+        debugPoly = false,
         minZ = 28.85,
         maxZ = 31.05,
         options = {
@@ -405,13 +405,33 @@ Config.BoxZones = {
         },
         distance = 2.0
     },
+    ['snowsmechanicshop'] = {
+        name = 'snowsmechanicshop',
+        coords = vector3(121.25, -3025.26, 7.04),
+        length = 1.8,
+        width = 1,
+        heading = 210,
+        debugPoly = true,
+        minZ = 6.04,
+        maxZ = 7.64,
+        options = {
+            {
+                type = 'client',
+                event = 'core_crafting:client:openWorkbench',
+                icon = 'fas fa-wrench',
+                label = 'Crafting',
+                job = 'mechanic',
+            },
+        },
+        distance = 1.5
+    }
     --[[["boxzone12"] = {
         name = "snows_gunshow_gunbin",
         coords = vector3(20.53, -1105.32, 29.8),
         length = 1.15,
         width = 2,
         heading = 340,
-        debugPoly = true,
+        debugPoly = false,
         minZ=25.8,
         maxZ=29.8,
         options = {
@@ -577,7 +597,22 @@ Config.TargetModels = {
                 label = 'Butcher Animal'
             }
         }
-    }
+    },
+    ["VehicleRental"] = {
+        models = {
+            `a_m_y_business_03`,
+        },
+        options = {
+            {
+                type = "client",
+                event = "qb-rental:client:openMenu",
+                icon = "fas fa-car",
+                label = "Rent Vehicle",
+                MenuType = "vehicle"
+            },
+        },
+        distance = 3.0
+    },
 }
 
 Config.GlobalPedOptions = {
@@ -745,7 +780,7 @@ Config.Peds = {
         },
     },
     [5] = {
-        model = '',
+        model = 'a_f_y_business_01',
         coords = vector4(-550.16, -190.01, 38.22, 182.22),
         minusOne = true,
         freeze = true,
@@ -758,10 +793,46 @@ Config.Peds = {
                     icon = 'fas fa-id-badge',
                     label = 'Job and License Center',
                 },
-            }
+            },
+            distance = 2.0
         }
-    }
-         
+    },
+    [6] = {
+        model = 'a_m_m_ktown_01',
+        coords = vector4(50.22, -1763.86, 29.61, 60.47),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = '',
+                    icon = 'fab fa-shopify',
+                    label = 'Hardware Shop',
+                },
+            },
+            distance = 1.5
+        }
+    },
+    [7] = {
+        model = 'csb_chef2', --m_meth_01
+        coords = vector4(972.89, -2164.62, 29.47, 159.73),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'materials:buy',
+                    icon = 'fas fa-flask',
+                    label = 'Acid Shop',
+                },
+            },
+            distance = 1.5
+        }
+    }   
 }
 
 -------------------------------------------------------------------------------
