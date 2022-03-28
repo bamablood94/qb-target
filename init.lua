@@ -18,7 +18,7 @@ end
 Config = {}
 
 -- It's possible to interact with entities through walls so this should be low
-Config.MaxDistance = 5.0
+Config.MaxDistance = 7.0
 
 -- Enable debug options
 Config.Debug = false
@@ -29,18 +29,23 @@ Config.Standalone = false
 -- Enable outlines around the entity you're looking at
 Config.EnableOutline = false
 
+-- Whether to have the target as a toggle or not
+Config.Toggle = false
+
+-- The color of the outline in rgb, the first value is red, the second value is green and the last value is blue. Here is a link to a color picker to get these values: https://htmlcolorcodes.com/color-picker/
+Config.OutlineColor = {255, 255, 255}
+
 -- Enable default options (Toggling vehicle doors)
 Config.EnableDefaultOptions = false
 
 -- Disable the target eye whilst being in a vehicle
 Config.DisableInVehicle = false
 
--- Key to open the target
+-- Key to open the target eye, here you can find all the names: https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/
 Config.OpenKey = 'LMENU' -- Left Alt
-Config.OpenControlKey = 19 -- Control for keypress detection also Left Alt for the eye itself, controls are found here https://docs.fivem.net/docs/game-references/controls/
 
--- Key to open the menu
-Config.MenuControlKey = 238 -- Control for keypress detection on the context menu, this is the Right Mouse Button, controls are found here https://docs.fivem.net/docs/game-references/controls/
+-- Control for key press detection on the context menu, it's the Right Mouse Button by default, controls are found here https://docs.fivem.net/docs/game-references/controls/
+Config.MenuControlKey = 238
 
 -------------------------------------------------------------------------------
 -- Target Configs
@@ -474,10 +479,6 @@ Config.TargetBones = {
 
 }
 
-Config.TargetEntities = {
-
-}
-
 Config.TargetModels = {
 	["drinkVending"] = {
         models =     {
@@ -883,7 +884,32 @@ local function ItemCount() return true end
 local function CitizenCheck() return true end
 
 CreateThread(function()
-	if not Config.Standalone then
+	local state = GetResourceState('qb-core')
+	if state ~= 'missing' then
+		if state ~= 'started' then
+			local timeout = 0
+			repeat
+				timeout += 1
+				Wait(0)
+			until GetResourceState('qb-core') == 'started' or timeout > 100
+		end
+		Config.Standalone = false
+	end
+	if Config.Standalone then
+		local firstSpawn = false
+		local event = AddEventHandler('playerSpawned', function()
+			SpawnPeds()
+			firstSpawn = true
+		end)
+		-- Remove event after it has been triggered
+		while true do
+			if firstSpawn then
+				RemoveEventHandler(event)
+				break
+			end
+			Wait(1000)
+		end
+	else
 		local QBCore = exports['qb-core']:GetCoreObject()
 		local PlayerData = QBCore.Functions.GetPlayerData()
 
@@ -944,14 +970,6 @@ CreateThread(function()
 
 		RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
 			PlayerData = val
-		end)
-	else
-		local firstSpawn = false
-		AddEventHandler('playerSpawned', function()
-			if not firstSpawn then
-				SpawnPeds()
-				firstSpawn = true
-			end
 		end)
 	end
 end)
