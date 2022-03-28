@@ -51,17 +51,36 @@ Config.MenuControlKey = 238 -- Control for keypress detection on the context men
 Config.CircleZones = {
 
 }
-
 Config.BoxZones = {
+    ['mrpdevidencestash'] = {
+        name = 'mrpdevidencestash',
+        coords = vector3(473.63, -991.56, 26.27),
+        length = 0.25,
+        width = 0.65,
+        heading = 56,
+        debugPoly = true,
+        minZ = 26.12,
+        maxZ = 26.72,
+        options = {
+            {
+                type = 'client',
+                event = 'police:client:EvidenceStashDrawerTarget',
+                icon = 'fas fa-folder',
+                label = 'Open Evidence',
+                job = 'police',
+            },
+        },
+        distance = 2.0
+    },
 	["MRPDBossMenu"] = {
         name = "MRPDBossMenu",
-        coords = vector3(461.58, -985.55, 31.37),
-        length = 0.65,
-        width = 0.65,
-        heading = 122.95,
+        coords = vector3(461.46, -986.2, 30.73),
+        length = 0.40,
+        width = 0.35,
+        heading = 261,
         debugPoly = false,
-        minZ = 30.03,
-        maxZ = 31.14,
+        minZ = 30.48,
+        maxZ = 30.68,
         options = {
             {
                 type = "client",
@@ -199,7 +218,7 @@ Config.BoxZones = {
         length = 0.5,
         width = 0.3,
         heading = 88.68,
-        debugPoly = true,
+        debugPoly = false,
         minZ = 26.2,
         maxZ = 26.69,
         options = {
@@ -326,15 +345,15 @@ Config.BoxZones = {
 			}
 		}
 	},
-    ["boxzone9"] = {
+    ["snowsregister"] = {
         name = "snows_gunshow_register",
-        coords = vector3(23.75, -1106.43, 29.8),
+        coords = vector3(18.46, -1109.03, 29.8),
         length = 0.45,
-        width = 0.5,
-        heading = 341,
-        debugPoly = false,
+        width = 0.65,
+        heading = 250,
+        debugPoly = true,
         minZ=29.8,
-        maxZ=30.2,
+        maxZ=30.4,
         options = {
             {
               type = "client",
@@ -411,7 +430,7 @@ Config.BoxZones = {
         length = 1.8,
         width = 1,
         heading = 210,
-        debugPoly = true,
+        debugPoly = false,
         minZ = 6.04,
         maxZ = 7.64,
         options = {
@@ -613,6 +632,7 @@ Config.TargetModels = {
         },
         distance = 3.0
     },
+    
 }
 
 Config.GlobalPedOptions = {
@@ -692,7 +712,7 @@ Config.GlobalPlayerOptions = {
 Config.Peds = {
 	[1] = {
         model = 'a_f_y_hipster_01',
-        coords = vector4(-266.23, -967.81, 31.23, 300.11),
+        coords = vector4(-423.84, 1093.04, 298.68, 2.6),
         minusOne = true,
         freeze = true,
         invincible = true,
@@ -832,7 +852,26 @@ Config.Peds = {
             },
             distance = 1.5
         }
-    }   
+    },
+    --[[[8] =  { --Police Vehicle
+        model = 'ig_trafficwarden',
+        coords = vector4(441.43, -974.72, 24.7, 200.66),
+        scenario = "WORLD_HUMAN_CLIPBOARD",
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'police:client:VehicleMenuHeader',
+                    icon = 'fas fa-car',
+                    label = 'Police Garage',
+                    job = 'police',
+                },
+            },
+        },
+        distance = 3.5
+    },]]  
 }
 
 -------------------------------------------------------------------------------
