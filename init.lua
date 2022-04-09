@@ -57,48 +57,8 @@ Config.CircleZones = {
 
 }
 Config.BoxZones = {
-    ['mrpdevidencestash'] = {
-        name = 'mrpdevidencestash',
-        coords = vector3(473.63, -991.56, 26.27),
-        length = 0.25,
-        width = 0.65,
-        heading = 56,
-        debugPoly = true,
-        minZ = 26.12,
-        maxZ = 26.72,
-        options = {
-            {
-                type = 'client',
-                event = 'police:client:EvidenceStashDrawerTarget',
-                icon = 'fas fa-folder',
-                label = 'Open Evidence',
-                job = 'police',
-            },
-        },
-        distance = 2.0
-    },
-	["MRPDBossMenu"] = {
-        name = "MRPDBossMenu",
-        coords = vector3(461.46, -986.2, 30.73),
-        length = 0.40,
-        width = 0.35,
-        heading = 261,
-        debugPoly = false,
-        minZ = 30.48,
-        maxZ = 30.68,
-        options = {
-            {
-                type = "client",
-                event = "qb-bossmenu:client:openMenu",
-                icon = "fas fa-folder",
-                label = "Open Boss Menu",
-                job = "police",
-            },
-        },
-        distance = 2.0
-    },
-	["MRPDPoliceDuty"] = {
-        name = "MRPDPoliceDuty",
+    ['mrpdduty1'] = {
+        name = "policeduty",
         coords = vector3(441.83, -982.06, 30.69),
         length = 0.5,
         width = 0.4,
@@ -109,7 +69,7 @@ Config.BoxZones = {
         options = {
             {
                 type = "client",
-                event = "policejob:client:dutyToggle",
+                event = "qb-policejob:ToggleDuty",
                 icon = "fas fa-clipboard",
                 label = "Toggle Duty",
                 job = "police",
@@ -117,8 +77,8 @@ Config.BoxZones = {
         },
         distance = 1.5
     },
-	["MRPDPoliceDuty2"] = {
-        name = "MRPDPoliceDuty2",
+    ['mrpdduty2'] = {
+        name = "policeduty2",
         coords = vector3(473.16, -1006.95, 26.28),
         length = 0.45,
         width = 0.35,
@@ -129,7 +89,7 @@ Config.BoxZones = {
         options = {
             {
                 type = "client",
-                event = "policejob:client:dutyToggle",
+                event = "qb-policejob:ToggleDuty",
                 icon = "fas fa-clipboard",
                 label = "Toggle Duty",
                 job = "police",
@@ -137,28 +97,28 @@ Config.BoxZones = {
         },
         distance = 2.5
     },
-	["MRPDPoliceDutyDog"] = {
-        name = "MRPDPoliceDutyDog",
-        coords = vector3(460.78, -980.83, 31.27),
-        length = 1.0,
-        width = 1.0,
-        heading = 12,
+    ["mrpdbossmenu"] = {
+        name = "policebossmenu",
+        coords = vector3(461.46, -986.2, 30.73),
+        length = 0.40,
+        width = 0.35,
+        heading = 261,
         debugPoly = false,
-        minZ = 30.07,
-        maxZ = 30.57,
+        minZ = 30.48,
+        maxZ = 30.68,
         options = {
             {
                 type = "client",
-                event = "policejob:client:dutyToggle",
-                icon = "fas fa-clipboard",
-                label = "Woof Woof, donuts, YABADOABAODOOO, bork",
+                event = "qb-bossmenu:client:OpenMenu",
+                icon = "fas fa-folder",
+                label = "Open Boss Menu",
                 job = "police",
             },
         },
-        distance = 1.5
+        distance = 2.0
     },
-	["MRPDClothes"] = {
-        name = "MRPDClothes",
+	["mrpdclothes"] = {
+        name = "policeclothes",
         coords = vector3(461.93, -1000.2, 30.69),
         length = 0.4,
         width = 4.34,
@@ -177,8 +137,8 @@ Config.BoxZones = {
         },
         distance = 2.5
     },
-	["MRPDArmory"] = {
-        name = "MRPDArmory",
+	["mrpdarmory"] = {
+        name = "policearmory",
         coords = vector3(485.41, -995.34, 30.69),
         length = 1.5,
         width = 1.5,
@@ -189,7 +149,7 @@ Config.BoxZones = {
         options = {
             {
                 type = "client",
-                event = "police:client:openArmory",
+                event = "qb-police:client:openArmoury",
                 icon = "fas fa-clipboard",
                 label = "Open Police Armory",
                 job = "police"
@@ -197,8 +157,8 @@ Config.BoxZones = {
         },
         distance = 1.5
     },
-	["MRPDPersonalStash1"] = {
-        name = "MRPDPersonalStash1",
+	["mrpdpersonalstash"] = {
+        name = "policepersonalstash",
         coords = vector3(482.6, -995.07, 30.69),
         length = 0.8,
         width = 1,
@@ -217,8 +177,28 @@ Config.BoxZones = {
         },
         distance = 2.5
     },
-    ["MRPDFingerprintScan"] = {
-        name = "MRPDFingerprintScan",
+    ['mrpdtrash'] = {
+        name = 'policetrash',
+        coords = vector3(450.06, -981.94, 30.69),
+        length = 0.4,
+        width = 0.5,
+        heading = 321,
+        debugPoly = false,
+        minZ = 29.69,
+        maxZ = 30.29,
+        options = {
+            {
+                type = 'client',
+                event = 'qb-policejob:client:trash',
+                icon = 'fas fa-trash-can',
+                label = 'Trash Bin',
+                job = 'police',
+            },
+        },
+        distance = 1.5,
+    },
+    ["mrpfingerprintlower"] = {
+        name = "policefingerprint1",
         coords = vector3(474.16, -1014.02, 27.21),
         length = 0.5,
         width = 0.3,
@@ -229,10 +209,30 @@ Config.BoxZones = {
         options = {
             {
                 type = "client",
-                event = "police:client:openFingerprint",
+                event = "qb-police:client:scanFingerPrint",
                 icon = "fas fa-fingerprint",
                 label = "Scan Fingerprint",
                 job = "police",
+            },
+        },
+        distance = 2.5
+    },
+    ['mrpdfingerprintupper'] = {
+        name = 'policefingerprint2',
+        coords = vector3(443.02, -984.31, 30.69),
+        length = 0.5,
+        width = 0.5,
+        heading = 311,
+        debugPoly = false,
+        minZ = 30.54,
+        maxZ = 31.14,
+        options = {
+            {
+                type = 'client',
+                event = 'qb-police:client:scanFingerPrint',
+                icon = 'fas fa-fingerprint',
+                label = 'Scan Fingerprint',
+                job = 'police'
             },
         },
         distance = 2.5
@@ -343,52 +343,13 @@ Config.BoxZones = {
 		options = {
 			{
 				type = 'client',
-				event = 'qb-bossmenu:client:openMenu',
+				event = 'qb-bossmenu:client:OpenMenu',
 				icon = 'fas fa-desktop',
 				label = 'Access Boss Menu',
 				job = 'mechanic'
 			}
 		}
 	},
-    ["snowsregister"] = {
-        name = "snows_gunshow_register",
-        coords = vector3(18.46, -1109.03, 29.8),
-        length = 0.45,
-        width = 0.65,
-        heading = 250,
-        debugPoly = true,
-        minZ=29.8,
-        maxZ=30.4,
-        options = {
-            {
-              type = "client",
-              event = "shopgun:menu",
-              icon = "fas fa-cash-register",
-              label = "Gun Register",
-              job = "snowsgunshow"
-            },
-        },
-        distance = 2.5
-    },
-    ["boxzone10"] = {
-        name = "snows_gunshow_shoptable",
-        coords = vector3(22.35, -1106.15, 29.8),
-        length = 0.8,
-        width = 2,
-        heading = 340,
-        debugPoly = false,
-        minZ=25.8,
-        maxZ=29.8,
-        options = {
-            {
-              type = "client",
-              event = "shopgun:OpenInventory",
-              icon = "fas fa-box-open",
-              label = "shop table",
-            },
-        },
-        distance = 2.5
-    },
     ["boxzone11"] = {
         name = "snows_gunshow_stash",
         coords = vector3(23.18, -1109.38, 29.8),
@@ -409,25 +370,45 @@ Config.BoxZones = {
         },
         distance = 2.5
     },
-    ["boxzone12"] = {
+    ["snowsgunshow-bossmenu"] = {
         name = "SnowsGunShowBossmenu",
-        coords = vector3(12.19, -1106.16, 29.8),
-        length = 0.4,
+        coords = vector3(12.99, -1112.34, 29.8),
+        length = 0.6,
         width = 2,
         heading = 340,
         debugPoly = false,
         minZ = 28.85,
-        maxZ = 31.05,
+        maxZ = 30,
         options = {
             {
                 type = "client",
-                event = "qb-bossmenu:client:openMenu",
+                event = "qb-bossmenu:client:OpenMenu",
                 icon = "fas fa-folder",
                 label = "Open Boss Menu",
                 job = "snowsgunshow",
             },
         },
         distance = 2.0
+    },
+    ['snowsmechanicshopbossmenu'] = {
+        name = 'snowsmechanicshop-bossmenu',
+        coords = vector3(125.55, -3007.24, 7.04),
+        length = 0.4,
+        width = 0.3,
+        heading = 260,
+        debugPoly = false,
+        minZ = 6.84,
+        maxZ = 7.19,
+        options = {
+            {
+                type = 'client',
+                event = 'qb-bossmenu:client:OpenMenu',
+                icon = 'fas fa-folder',
+                label = 'Open Boss Menu',
+                job = 'snowsmechanicshop',
+            },
+        },
+        distance = 1.5,
     },
     ['snowsmechanicshop'] = {
         name = 'snowsmechanicshop',
@@ -444,31 +425,50 @@ Config.BoxZones = {
                 event = 'core_crafting:client:openWorkbench',
                 icon = 'fas fa-wrench',
                 label = 'Crafting',
-                job = 'mechanic',
+                job = 'snowsmechanicshop'
+            },
+        },
+        distance = 1.5
+    },
+    ["snowsmechanicshop-stash"] = {
+        name = "snowsmechanicshop-stash",
+        coords = vector3(128.48, -3007.86, 7.04),
+        length = 3.2,
+        width = 2,
+        heading = 270,
+        debugPoly = false,
+        minZ = 6.04,
+        maxZ = 9.04,
+        options = {
+            {
+                type = "client",
+                event = "police:client:openStash",
+                icon = "fas fa-boxes",
+                label = "Personal Stash",
+                job = "police",
+            },
+        },
+        distance = 2.5
+    },
+    ['core_crafting_workbench1'] = {
+        name = 'workbench1',
+        coords = vector3(968.24, 2726.9, 39.48),
+        length = 1.5,
+        width = 1,
+        heading = 232,
+        debugPoly = false,
+        minZ = 38.43,
+        maxZ = 39.63,
+        options = {
+            {
+                type = 'client',
+                event = 'core_crafting:client:openWorkbench',
+                icon = 'fas fa-wrench',
+                label = 'Crafting',
             },
         },
         distance = 1.5
     }
-    --[[["boxzone12"] = {
-        name = "snows_gunshow_gunbin",
-        coords = vector3(20.53, -1105.32, 29.8),
-        length = 1.15,
-        width = 2,
-        heading = 340,
-        debugPoly = false,
-        minZ=25.8,
-        maxZ=29.8,
-        options = {
-            {
-              type = "client",
-              event = "Shopgun:Trash",
-              icon = "fas fa-trash",
-              label = "gun bin",
-              job = "gunshop"
-            },
-        },
-        distance = 2.5
-    },]]
 }
 
 Config.PolyZones = {
@@ -542,23 +542,6 @@ Config.TargetModels = {
 		},
 		distance = 2.5
 	},
-    ["ATM"] = {
-        models = {
-            "prop_atm_01", 
-            "prop_atm_02", 
-            "prop_atm_03", 
-            "prop_fleeca_atm"},
-        options = {
-                            {
-                type = "command",
-                event = "atm",
-                parameters = {},
-                icon = "fab fa-cc-visa",
-                label = "Use ATM"
-            },
-        },
-        distance = 1.0
-    },
     ["qb-slots"] = {
 		models = {
 			'ch_prop_casino_slot_01a',
@@ -603,21 +586,6 @@ Config.TargetModels = {
         },
         distance = 2.5,
     },
-    ['hunting'] = {
-        models = {
-            'a_c_deer',
-            'a_c_coyote',
-            'a_c_boar'
-        },
-        options = {
-            {
-                type = 'client',
-                event = 'qb-hunting:client:butcheranimal',
-                icon = 'fas fa-gun',
-                label = 'Butcher Animal'
-            }
-        }
-    },
     ["VehicleRental"] = {
         models = {
             `a_m_y_business_03`,
@@ -633,7 +601,21 @@ Config.TargetModels = {
         },
         distance = 3.0
     },
-    
+    ["parkingmeter"] = {
+        models = {
+            'prop_parknmeter_01',
+            'prop_parknmeter_02',
+        },
+        options = {
+            {
+                type = "client",
+                event = "qb-robparking:client:robParking",
+                icon = "fas fa-unlock",
+                label = "Break into parking meter",
+            },
+        },
+        distance = 1.5
+    },
 }
 
 Config.GlobalPedOptions = {
@@ -758,7 +740,7 @@ Config.Peds = {
             distance = 2.5
         },
     },
-    [3] = {
+    --[[[3] = {
         model = 'a_m_m_farmer_01',
         coords = vector4(2029.65, 4980.63, 42.1, 226.36),
         minusOne = true,
@@ -781,7 +763,7 @@ Config.Peds = {
             },
             distance = 2.5
         },
-    },
+    },]]
     [4] = {
         model = 's_m_m_paramedic_01',
         coords = vector4(242.39, -1377.46, 39.53, 313.54),
