@@ -623,13 +623,33 @@ Config.GlobalPedOptions = {
 }
 
 Config.GlobalVehicleOptions = {
+    options = {
+        {
+            type = 'client',
+            event = 'qb-methcar:cook',
+            icon = 'fas fa-blender',
+            label = 'Lets cook!',
+			canInteract = function(entity)
+                if GetVehicleEngineHealth(entity) <= 0 then return false end
+                	local model = GetEntityModel(entity)
+					local modelName = GetDisplayNameFromVehicleModel(model)
+					if modelName == 'JOURNEY' then
+                    return true
+                end
+                return false
+            end
+        },
+    },
+    distance = 2.0,
+}
+--[[Config.GlobalVehicleOptions = {
 	options = {
-		--[[{
+		{
 			type = 'client',
 			event = 'police:client:SetPlayerOutVehicle',
 			icon = 'fas fa-chevron-circle-right',
 			label = 'Remove From Vehicle',
-		},]]
+		},
 		{
 			type = 'client',
 			event = 'police:client:ImpoundVehicle',
@@ -658,12 +678,12 @@ Config.GlobalVehicleOptions = {
 			label = 'Tow vehicle',
 			job = 'mechanic12'
 		},
-		--[[{
+		{
 			type = 'client',
 			event = 'qb-trunk:client:GetIn',
 			icon = 'fas fa-user-secret',
 			label = 'Get In Trunk',
-		},]]
+		},
 		-- {
 		--     type = 'client',
 		--     event = 'vehicle:flipit',
@@ -675,25 +695,83 @@ Config.GlobalVehicleOptions = {
 		--     end,
 		-- },
 	}
-}
+}]]
 
 Config.GlobalObjectOptions = {
 
 }
 
 Config.GlobalPlayerOptions = {
-	options = {
+	--[[options = {
 		{
 			type = 'client',
 			event = 'qb-phone:client:GiveContactDetails',
 			icon = 'fas fa-address-book',
 			label = 'Give contact details',
 		},
-	}
+	}]]
 }
 
 Config.Peds = {
-	[1] = {
+    [1] = {
+        model = 'S_M_Y_Construct_01',
+        coords = vector4(-595.15,2091.23,131.46, 61.59),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        blockevents = true,
+        scenario = 'WORLD_HUMAN_CLIPBOARD',
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'jim-mining:openShop',
+                    icon = 'fas fa-cetificate',
+                    label = 'Browse Store'
+                }
+            }
+        },
+        distance = 2.0
+    },
+    [2] = {
+        model = 'S_M_Y_Construct_01',
+        coords = vector4(2961.02, 2754.14, 43.71, 200),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        blockevents = true,
+        scenario = 'WORLD_HUMAN_CLIPBOARD',
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'jim-mining:openShop',
+                    icon = 'fas fa-cetificate',
+                    label = 'Browse Store'
+                }
+            }
+        },
+        distance = 2.0
+    },
+    [3] = {
+        model = 'a_f_y_business_01',
+        coords = vector4(-550.16, -190.01, 38.22, 182.22),
+        minusOne = true,
+        freeze = true,
+        invincible = true,
+        target = {
+            options = {
+                {
+                    type = 'client',
+                    event = 'qb-cityhall:client:openui',
+                    icon = 'fas fa-id-badge',
+                    label = 'Job and License Center',
+                },
+            },
+            distance = 2.0
+        }
+    },
+	--[[[1] = {
         model = 'a_f_y_hipster_01',
         coords = vector4(-423.84, 1093.04, 298.68, 2.6),
         minusOne = true,
@@ -740,7 +818,7 @@ Config.Peds = {
             distance = 2.5
         },
     },
-    --[[[3] = {
+    [3] = {
         model = 'a_m_m_farmer_01',
         coords = vector4(2029.65, 4980.63, 42.1, 226.36),
         minusOne = true,
@@ -763,7 +841,7 @@ Config.Peds = {
             },
             distance = 2.5
         },
-    },]]
+    },
     [4] = {
         model = 's_m_m_paramedic_01',
         coords = vector4(242.39, -1377.46, 39.53, 313.54),
@@ -781,24 +859,6 @@ Config.Peds = {
             },
             distance = 2.5
         },
-    },
-    [5] = {
-        model = 'a_f_y_business_01',
-        coords = vector4(-550.16, -190.01, 38.22, 182.22),
-        minusOne = true,
-        freeze = true,
-        invincible = true,
-        target = {
-            options = {
-                {
-                    type = 'client',
-                    event = 'qb-cityhall:client:openui',
-                    icon = 'fas fa-id-badge',
-                    label = 'Job and License Center',
-                },
-            },
-            distance = 2.0
-        }
     },
     [6] = {
         model = 'a_m_m_ktown_01',
