@@ -14,14 +14,20 @@ local GetEntityType = GetEntityType
 local PlayerPedId = PlayerPedId
 local GetShapeTestResult = GetShapeTestResult
 local StartShapeTestLosProbe = StartShapeTestLosProbe
+local SetDrawOrigin = SetDrawOrigin
+local DrawSprite = DrawSprite
+local ClearDrawOrigin = ClearDrawOrigin
+local HasStreamedTextureDictLoaded = HasStreamedTextureDictLoaded
+local RequestStreamedTextureDict = RequestStreamedTextureDict
 local currentResourceName = GetCurrentResourceName()
 local Config, Types, Players, Entities, Models, Zones, nuiData, sendData, sendDistance = Config, {{}, {}, {}}, {}, {}, {}, {}, {}, {}, {}
 local playerPed, targetActive, hasFocus, success, pedsReady, allowTarget = PlayerPedId(), false, false, false, false, true
 local screen = {}
 local table_wipe = table.wipe
 local pairs = pairs
-local CheckOptions
+local CheckOptions = CheckOptions
 local Bones = Load('bones')
+local listSprite = {}
 
 ---------------------------------------
 --- Source: https://github.com/citizenfx/lua/blob/luaglm-dev/cfx/libs/scripts/examples/scripting_gta.lua
@@ -54,6 +60,38 @@ end
 ---------------------------------------
 
 -- Functions
+
+local function DrawTarget()
+	CreateThread(function()
+		while not HasStreamedTextureDictLoaded("shared") do Wait(10) RequestStreamedTextureDict("shared", true) end
+		local sleep
+		local r, g, b, a
+		while targetActive do
+			sleep = 500
+			for _, zone in pairs(listSprite) do
+				sleep = 0
+
+				r = zone.targetoptions.drawColor?[1] or Config.DrawColor[1]
+				g = zone.targetoptions.drawColor?[2] or Config.DrawColor[2]
+				b = zone.targetoptions.drawColor?[3] or Config.DrawColor[3]
+				a = zone.targetoptions.drawColor?[4] or Config.DrawColor[4]
+
+				if zone.success then
+					r = zone.targetoptions.successDrawColor?[1] or Config.SuccessDrawColor[1]
+					g = zone.targetoptions.successDrawColor?[2] or Config.SuccessDrawColor[2]
+					b = zone.targetoptions.successDrawColor?[3] or Config.SuccessDrawColor[3]
+					a = zone.targetoptions.successDrawColor?[4] or Config.SuccessDrawColor[4]
+				end
+
+				SetDrawOrigin(zone.center.x, zone.center.y, zone.center.z, 0)
+				DrawSprite("shared", "emptydot_32", 0, 0, 0.02, 0.035, 0, r, g, b, a)
+				ClearDrawOrigin()
+			end
+			Wait(sleep)
+		end
+		listSprite = {}
+	end)
+end
 
 local function RaycastCamera(flag, playerCoords)
 	if not playerPed then playerPed = PlayerPedId() end
@@ -120,38 +158,52 @@ exports('DisableTarget', DisableTarget)
 local function DrawOutlineEntity(entity, bool)
 	if not Config.EnableOutline or IsEntityAPed(entity) then return end
 	SetEntityDrawOutline(entity, bool)
-	SetEntityDrawOutlineColor(entity, Config.OutlineColor[1], Config.OutlineColor[2], Config.OutlineColor[3])
+	SetEntityDrawOutlineColor(Config.OutlineColor[1], Config.OutlineColor[2], Config.OutlineColor[3], Config.OutlineColor[4])
 end
 
 exports('DrawOutlineEntity', DrawOutlineEntity)
 
-local function CheckEntity(flag, datatable, entity, distance)
-	if not next(datatable) then return end
-	table_wipe(sendDistance)
+local function SetupOptions(datatable, entity, distance, isZone)
+	if not isZone then table_wipe(sendDistance) end
 	table_wipe(nuiData)
 	local slot = 0
 	for _, data in pairs(datatable) do
 		if CheckOptions(data, entity, distance) then
-			slot += 1
+			slot = data.num or slot + 1
 			sendData[slot] = data
 			sendData[slot].entity = entity
 			nuiData[slot] = {
 				icon = data.icon,
+				targeticon = data.targeticon,
 				label = data.label
 			}
-			sendDistance[data.distance] = true
-		else sendDistance[data.distance] = false end
+			if not isZone then
+				sendDistance[data.distance] = true
+			end
+		else
+			if not isZone then
+				sendDistance[data.distance] = false
+			end
+		end
 	end
+	return slot
+end
+
+exports('SetupOptions', SetupOptions)
+
+local function CheckEntity(flag, datatable, entity, distance)
+	if not next(datatable) then return end
+	local slot = SetupOptions(datatable, entity, distance)
 	if not next(nuiData) then
-		LeaveTarget()
+		LeftTarget()
 		DrawOutlineEntity(entity, false)
 		return
 	end
 	success = true
-	SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
+	SendNUIMessage({response = "foundTarget", data = nuiData[slot].targeticon})
 	DrawOutlineEntity(entity, true)
 	while targetActive and success do
-		local _, dist, entity2, _ = RaycastCamera(flag)
+		local _, dist, entity2 = RaycastCamera(flag)
 		if entity ~= entity2 then
 			LeftTarget()
 			DrawOutlineEntity(entity, false)
@@ -198,13 +250,13 @@ exports('CheckBones', CheckBones)
 
 local function EnableTarget()
 	if not allowTarget or success or (not Config.Standalone and not LocalPlayer.state['isLoggedIn']) or IsNuiFocused() or (Config.DisableInVehicle and IsPedInAnyVehicle(playerPed or PlayerPedId(), false)) then return end
-	if not CheckOptions then CheckOptions = _ENV.CheckOptions end
-	if targetActive or not CheckOptions then return end
+	if targetActive then return end
 
 	targetActive = true
 	playerPed = PlayerPedId()
 	screen.ratio = GetAspectRatio(true)
 	screen.fov = GetFinalRenderedCamFov()
+	if Config.DrawSprite then DrawTarget() end
 
 	SendNUIMessage({response = "openTarget"})
 	CreateThread(function()
@@ -250,29 +302,15 @@ local function EnableTarget()
 					if IsPedAPlayer(entity) then data = Players end
 					if data and next(data) then CheckEntity(flag, data, entity, distance) end
 
-				-- Vehicle bones
+				-- Vehicle bones and models
 				elseif entityType == 2 then
 					local closestBone, _, closestBoneName = CheckBones(coords, entity, Bones.Vehicle)
 					local datatable = Bones.Options[closestBoneName]
 					if datatable and next(datatable) and closestBone then
-						table_wipe(sendDistance)
-						table_wipe(nuiData)
-						local slot = 0
-						for _, data in pairs(datatable) do
-							if CheckOptions(data, entity, distance) then
-								slot += 1
-								sendData[slot] = data
-								sendData[slot].entity = entity
-								nuiData[slot] = {
-									icon = data.icon,
-									label = data.label
-								}
-								sendDistance[data.distance] = true
-							else sendDistance[data.distance] = false end
-						end
+						local slot = SetupOptions(datatable, entity, distance)
 						if next(nuiData) then
 							success = true
-							SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
+							SendNUIMessage({response = "foundTarget", data = nuiData[slot].targeticon})
 							DrawOutlineEntity(entity, true)
 							while targetActive and success do
 								local _, dist, entity2 = RaycastCamera(flag)
@@ -304,11 +342,11 @@ local function EnableTarget()
 							LeftTarget()
 							DrawOutlineEntity(entity, false)
 						end
-					else
-						-- Vehicle Model targets
-						local data = Models[GetEntityModel(entity)]
-						if data then CheckEntity(flag, data, entity, distance) end
 					end
+
+					-- Vehicle model targets
+					local data = Models[GetEntityModel(entity)]
+					if data then CheckEntity(flag, data, entity, distance) end
 
 				-- Entity targets
 				elseif entityType > 2 then
@@ -325,33 +363,31 @@ local function EnableTarget()
 			if not success then
 				-- Zone targets
 				local closestDis, closestZone
-				for _, zone in pairs(Zones) do
+				for k, zone in pairs(Zones) do
 					if distance < (closestDis or Config.MaxDistance) and distance <= zone.targetoptions.distance and zone:isPointInside(coords) then
 						closestDis = distance
 						closestZone = zone
 					end
-				end
-				if closestZone then
-					table_wipe(nuiData)
-					local slot = 0
-					for _, data in pairs(closestZone.targetoptions.options) do
-						if CheckOptions(data, entity, distance) then
-							slot += 1
-							sendData[slot] = data
-							sendData[slot].entity = entity
-							nuiData[slot] = {
-								icon = data.icon,
-								label = data.label
-							}
+					if Config.DrawSprite then
+						if #(coords - zone.center) < (zone.targetoptions.drawDistance or Config.DrawDistance) then
+							listSprite[k] = zone
+						else
+							listSprite[k] = nil
 						end
 					end
+				end
+				if closestZone then
+					local slot = SetupOptions(closestZone.targetoptions.options, entity, distance, true)
 					if next(nuiData) then
 						success = true
-						SendNUIMessage({response = "foundTarget", data = sendData[slot].targeticon})
+						SendNUIMessage({response = "foundTarget", data = nuiData[slot].targeticon})
+						if Config.DrawSprite then
+							listSprite[closestZone.name].success = true
+						end
 						DrawOutlineEntity(entity, true)
 						while targetActive and success do
-							local coords, distance = RaycastCamera(flag)
-							if not closestZone:isPointInside(coords) or distance > closestZone.targetoptions.distance then
+							local newCoords, dist = RaycastCamera(flag)
+							if not closestZone:isPointInside(newCoords) or dist > closestZone.targetoptions.distance then
 								LeftTarget()
 								DrawOutlineEntity(entity, false)
 								break
@@ -360,6 +396,9 @@ local function EnableTarget()
 								DrawOutlineEntity(entity, false)
 							end
 							Wait(0)
+						end
+						if Config.DrawSprite and listSprite[closestZone.name] then -- Check for when the targetActive is false and it removes the zone from listSprite
+							listSprite[closestZone.name].success = false
 						end
 						LeftTarget()
 						DrawOutlineEntity(entity, false)
@@ -373,7 +412,8 @@ local function EnableTarget()
 end
 
 local function AddCircleZone(name, center, radius, options, targetoptions)
-	center = type(center) == 'table' and vec3(center.x, center.y, center.z) or center
+	local centerType = type(center)
+	center = (centerType == 'table' or centerType == 'vector4') and vec3(center.x, center.y, center.z) or center
 	Zones[name] = CircleZone:Create(center, radius, options)
 	targetoptions.distance = targetoptions.distance or Config.MaxDistance
 	Zones[name].targetoptions = targetoptions
@@ -383,7 +423,8 @@ end
 exports("AddCircleZone", AddCircleZone)
 
 local function AddBoxZone(name, center, length, width, options, targetoptions)
-	center = type(center) == 'table' and vec3(center.x, center.y, center.z) or center
+	local centerType = type(center)
+	center = (centerType == 'table' or centerType == 'vector4') and vec3(center.x, center.y, center.z) or center
 	Zones[name] = BoxZone:Create(center, length, width, options)
 	targetoptions.distance = targetoptions.distance or Config.MaxDistance
 	Zones[name].targetoptions = targetoptions
@@ -394,7 +435,8 @@ exports("AddBoxZone", AddBoxZone)
 
 local function AddPolyZone(name, points, options, targetoptions)
 	local _points = {}
-	if type(points[1]) == 'table' then
+	local pointsType = type(points[1])
+	if pointsType == 'table' or pointsType == 'vector3' or pointsType == 'vector4' then
 		for i = 1, #points do
 			_points[i] = vec2(points[i].x, points[i].y)
 		end
@@ -515,7 +557,7 @@ local function RemoveTargetEntity(entities, labels)
 		for _, entity in pairs(entities) do
 			if NetworkGetEntityIsNetworked(entity) then entity = NetworkGetNetworkIdFromEntity(entity) end -- Allow non-networked entities to be targeted
 			if type(labels) == 'table' then
-				for k, v in pairs(labels) do
+				for _, v in pairs(labels) do
 					if Entities[entity] then
 						Entities[entity][v] = nil
 					end
@@ -566,7 +608,7 @@ local function RemoveTargetModel(models, labels)
 		for _, model in pairs(models) do
 			if type(model) == 'string' then model = joaat(model) end
 			if type(labels) == 'table' then
-				for k, v in pairs(labels) do
+				for _, v in pairs(labels) do
 					if Models[model] then
 						Models[model][v] = nil
 					end
@@ -580,7 +622,7 @@ local function RemoveTargetModel(models, labels)
 	else
 		if type(models) == 'string' then models = joaat(models) end
 		if type(labels) == 'table' then
-			for k, v in pairs(labels) do
+			for _, v in pairs(labels) do
 				if Models[models] then
 					Models[models][v] = nil
 				end
@@ -649,7 +691,7 @@ function SpawnPeds()
 	if pedsReady or not next(Config.Peds) then return end
 	for k, v in pairs(Config.Peds) do
 		if not v.currentpednumber or v.currentpednumber == 0 then
-			local spawnedped = 0
+			local spawnedped
 			RequestModel(v.model)
 			while not HasModelLoaded(v.model) do
 				Wait(0)
@@ -721,9 +763,9 @@ end
 exports("DeletePeds", DeletePeds)
 
 local function SpawnPed(data)
-	local spawnedped = 0
+	local spawnedped
 	local key, value = next(data)
-	if type(value) == 'table' and key ~= 'target' and key ~= 'coords' then
+	if type(value) == 'table' and type(key) ~= 'string' then
 		for _, v in pairs(data) do
 			if v.spawnNow then
 				RequestModel(v.model)
@@ -788,11 +830,6 @@ local function SpawnPed(data)
 			Config.Peds[nextnumber] = v
 		end
 	else
-		if type(value) == 'table' and key ~= 'target' and key ~= 'coords' then
-			if Config.Debug then print('Wrong table format for SpawnPed export') end
-			return
-		end
-
 		if data.spawnNow then
 			RequestModel(data.model)
 			while not HasModelLoaded(data.model) do
@@ -888,7 +925,7 @@ exports("GetGlobalTypeData", function(type, label) return Types[type][label] end
 
 exports("GetZoneData", function(name) return Zones[name] end)
 
-exports("GetTargetBoneData", function(bone) return Bones.Options[bone][label] end)
+exports("GetTargetBoneData", function(bone, label) return Bones.Options[bone][label] end)
 
 exports("GetTargetEntityData", function(entity, label) return Entities[entity][label] end)
 
@@ -924,11 +961,17 @@ exports("GetPeds", function() return Config.Peds end)
 
 exports("UpdatePedsData", function(index, data) Config.Peds[index] = data end)
 
-exports("AllowTargeting", function(bool) allowTarget = bool end)
+exports("AllowTargeting", function(bool)
+	allowTarget = bool
+	if not allowTarget then
+		DisableTarget(true)
+	end
+end)
 
 -- NUI Callbacks
 
 RegisterNUICallback('selectTarget', function(option, cb)
+	option = tonumber(option) or option
     SetNuiFocus(false, false)
     SetNuiFocusKeepInput(false)
 	Wait(100)
@@ -1003,7 +1046,7 @@ CreateThread(function()
 	end
 
     if next(Config.CircleZones) then
-        for k, v in pairs(Config.CircleZones) do
+        for _, v in pairs(Config.CircleZones) do
             AddCircleZone(v.name, v.coords, v.radius, {
                 name = v.name,
                 debugPoly = v.debugPoly,
@@ -1015,7 +1058,7 @@ CreateThread(function()
     end
 
     if next(Config.BoxZones) then
-        for k, v in pairs(Config.BoxZones) do
+        for _, v in pairs(Config.BoxZones) do
             AddBoxZone(v.name, v.coords, v.length, v.width, {
                 name = v.name,
                 heading = v.heading,
@@ -1030,7 +1073,7 @@ CreateThread(function()
     end
 
     if next(Config.PolyZones) then
-        for k, v in pairs(Config.PolyZones) do
+        for _, v in pairs(Config.PolyZones) do
             AddPolyZone(v.name, v.points, {
                 name = v.name,
                 debugPoly = v.debugPoly,
@@ -1044,7 +1087,7 @@ CreateThread(function()
     end
 
     if next(Config.TargetBones) then
-        for k, v in pairs(Config.TargetBones) do
+        for _, v in pairs(Config.TargetBones) do
             AddTargetBone(v.bones, {
                 options = v.options,
                 distance = v.distance
@@ -1053,7 +1096,7 @@ CreateThread(function()
     end
 
     if next(Config.TargetModels) then
-        for k, v in pairs(Config.TargetModels) do
+        for _, v in pairs(Config.TargetModels) do
             AddTargetModel(v.models, {
                 options = v.options,
                 distance = v.distance
